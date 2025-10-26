@@ -254,104 +254,6 @@
             color: #333;
             font-size: 16px;
         }
-
-        /* Custom Modal Styles */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-box {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-header {
-            font-size: 22px;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .modal-body {
-            font-size: 16px;
-            color: #333;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            white-space: pre-line;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .modal-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .modal-btn-primary {
-            background: #667eea;
-            color: white;
-        }
-
-        .modal-btn-primary:hover {
-            background: #5568d3;
-        }
-
-        .modal-btn-secondary {
-            background: #e9ecef;
-            color: #333;
-        }
-
-        .modal-btn-secondary:hover {
-            background: #dee2e6;
-        }
-
-        .modal-btn-success {
-            background: #28a745;
-            color: white;
-        }
-
-        .modal-btn-success:hover {
-            background: #218838;
-        }
     </style>
 </head>
 <body>
@@ -359,9 +261,9 @@
         <!-- Setup Screen -->
         <div id="setupScreen" class="setup-screen">
             <h2 style="text-align: center; color: #667eea; margin-bottom: 20px;">Match Setup</h2>
-            <input type="text" id="team1Name" placeholder="Enter Team 1 Name">
-            <input type="text" id="team2Name" placeholder="Enter Team 2 Name">
-            <input type="number" id="totalOvers" placeholder="Number of Overs" min="1">
+            <input type="text" id="team1Name" placeholder="Team 1 Name" value="Team A">
+            <input type="text" id="team2Name" placeholder="Team 2 Name" value="Team B">
+            <input type="number" id="totalOvers" placeholder="Total Overs" value="20" min="1">
             <button class="btn btn-primary" onclick="startMatch()">Start Match</button>
         </div>
 
@@ -433,80 +335,20 @@
         </div>
     </div>
 
-    <!-- Custom Modal -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-box">
-            <div class="modal-header" id="modalHeader">Message</div>
-            <div class="modal-body" id="modalBody"></div>
-            <div class="modal-buttons" id="modalButtons"></div>
-        </div>
-    </div>
-
     <script>
-        // Custom Modal Functions
-        function showModal(header, message, buttons) {
-            document.getElementById('modalHeader').textContent = header;
-            document.getElementById('modalBody').textContent = message;
-            
-            const buttonContainer = document.getElementById('modalButtons');
-            buttonContainer.innerHTML = '';
-            
-            buttons.forEach(btn => {
-                const button = document.createElement('button');
-                button.className = `modal-btn ${btn.class}`;
-                button.textContent = btn.text;
-                button.onclick = () => {
-                    closeModal();
-                    if (btn.action) btn.action();
-                };
-                buttonContainer.appendChild(button);
-            });
-            
-            document.getElementById('modalOverlay').classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('modalOverlay').classList.remove('active');
-        }
-
-        function showAlert(message, title = 'Notice') {
-            showModal(title, message, [
-                { text: 'OK', class: 'modal-btn-primary' }
-            ]);
-        }
-
-        function showConfirm(message, onConfirm, title = 'Confirm') {
-            showModal(title, message, [
-                { text: 'Cancel', class: 'modal-btn-secondary' },
-                { text: 'Confirm', class: 'modal-btn-primary', action: onConfirm }
-            ]);
-        }
-
         let match = {
             team1: { name: '', runs: 0, wickets: 0, balls: 0, overs: 0, ballsInOver: 0, extras: 0 },
             team2: { name: '', runs: 0, wickets: 0, balls: 0, overs: 0, ballsInOver: 0, extras: 0 },
             totalOvers: 20,
             currentInnings: 1,
             currentOverBalls: [],
-            history: [],
-            matchEnded: false
+            history: []
         };
 
         function startMatch() {
-            const t1 = document.getElementById('team1Name').value.trim();
-            const t2 = document.getElementById('team2Name').value.trim();
-            const overs = parseInt(document.getElementById('totalOvers').value);
-
-            // Validation
-            if (!t1 || !t2) {
-                showAlert('Please enter both team names!', 'Missing Information');
-                return;
-            }
-            
-            if (!overs || overs < 1) {
-                showAlert('Please enter a valid number of overs (minimum 1)!', 'Invalid Overs');
-                return;
-            }
+            const t1 = document.getElementById('team1Name').value.trim() || 'Team A';
+            const t2 = document.getElementById('team2Name').value.trim() || 'Team B';
+            const overs = parseInt(document.getElementById('totalOvers').value) || 20;
 
             match.team1.name = t1;
             match.team2.name = t2;
@@ -527,26 +369,7 @@
         }
 
         function addRun(runs) {
-            if (match.matchEnded) {
-                showAlert('Match has ended! Please start a new match.', 'Match Ended');
-                return;
-            }
-            
             const team = getCurrentTeam();
-            const totalBalls = team.overs * 6 + team.ballsInOver;
-            const maxBalls = match.totalOvers * 6;
-            
-            // Check if innings should end before adding ball
-            if (totalBalls >= maxBalls) {
-                showAlert(`${match.totalOvers} overs completed! Cannot add more balls.`, 'Overs Complete');
-                return;
-            }
-            
-            if (team.wickets >= 10) {
-                showAlert('All wickets are down! Cannot continue batting.', 'All Out');
-                return;
-            }
-            
             team.runs += runs;
             team.balls++;
             team.ballsInOver++;
@@ -560,26 +383,7 @@
         }
 
         function addWicket() {
-            if (match.matchEnded) {
-                showAlert('Match has ended! Please start a new match.', 'Match Ended');
-                return;
-            }
-            
             const team = getCurrentTeam();
-            const totalBalls = team.overs * 6 + team.ballsInOver;
-            const maxBalls = match.totalOvers * 6;
-            
-            // Check if innings should end before adding ball
-            if (totalBalls >= maxBalls) {
-                showAlert(`${match.totalOvers} overs completed! Cannot add more balls.`, 'Overs Complete');
-                return;
-            }
-            
-            if (team.wickets >= 10) {
-                showAlert('All wickets are already down!', 'All Out');
-                return;
-            }
-            
             team.wickets++;
             team.balls++;
             team.ballsInOver++;
@@ -593,11 +397,6 @@
         }
 
         function addWide() {
-            if (match.matchEnded) {
-                showAlert('Match has ended! Please start a new match.', 'Match Ended');
-                return;
-            }
-            
             const team = getCurrentTeam();
             team.runs++;
             team.extras++;
@@ -606,19 +405,9 @@
             match.history.push({ type: 'wide' });
             
             updateDisplay();
-            
-            // Check if team 2 won with wide
-            if (match.currentInnings === 2 && team.runs > match.team1.runs) {
-                endMatch();
-            }
         }
 
         function addNoBall() {
-            if (match.matchEnded) {
-                showAlert('Match has ended! Please start a new match.', 'Match Ended');
-                return;
-            }
-            
             const team = getCurrentTeam();
             team.runs++;
             team.extras++;
@@ -627,11 +416,6 @@
             match.history.push({ type: 'noball' });
             
             updateDisplay();
-            
-            // Check if team 2 won with no ball
-            if (match.currentInnings === 2 && team.runs > match.team1.runs) {
-                endMatch();
-            }
         }
 
         function checkOver() {
@@ -684,41 +468,16 @@
             const totalBalls = team.overs * 6 + team.ballsInOver;
             const maxBalls = match.totalOvers * 6;
             
-            let inningsEnded = false;
-            
-            if (team.wickets >= 10) {
-                inningsEnded = true;
-                showModal(
-                    'Innings Ended - All Out!',
-                    `${team.name} innings ended: ${team.runs}/${team.wickets}\n\n${team.name} is all out!`,
-                    [{ text: 'OK', class: 'modal-btn-primary' }]
-                );
-            } else if (totalBalls >= maxBalls) {
-                inningsEnded = true;
-                showModal(
-                    'Innings Ended - Overs Complete!',
-                    `${match.totalOvers} overs completed!\n\n${team.name} innings ended: ${team.runs}/${team.wickets}`,
-                    [{ text: 'OK', class: 'modal-btn-primary' }]
-                );
+            if (team.wickets >= 10 || totalBalls >= maxBalls) {
+                if (match.currentInnings === 1) {
+                    alert(`${team.name} innings ended: ${team.runs}/${team.wickets}`);
+                } else {
+                    endMatch();
+                }
             }
             
             if (match.currentInnings === 2 && team.runs > match.team1.runs) {
                 endMatch();
-                return;
-            }
-            
-            if (inningsEnded) {
-                if (match.currentInnings === 1) {
-                    setTimeout(() => {
-                        showConfirm(
-                            'First innings completed. Start second innings?',
-                            () => nextInnings(),
-                            'Start 2nd Innings'
-                        );
-                    }, 500);
-                } else {
-                    endMatch();
-                }
             }
         }
 
@@ -734,46 +493,25 @@
         }
 
         function endMatch() {
-            match.matchEnded = true;
-            
             const t1Runs = match.team1.runs;
             const t2Runs = match.team2.runs;
-            const t1Wickets = match.team1.wickets;
-            const t2Wickets = match.team2.wickets;
-            
             let result;
-            let emoji;
             
             if (t2Runs > t1Runs) {
-                const wicketsLeft = 10 - t2Wickets;
-                result = `${match.team2.name} WON by ${wicketsLeft} wickets!`;
-                emoji = '🏆';
+                const wicketsLeft = 10 - match.team2.wickets;
+                result = `${match.team2.name} won by ${wicketsLeft} wickets!`;
             } else if (t1Runs > t2Runs) {
                 const runsDiff = t1Runs - t2Runs;
-                result = `${match.team1.name} WON by ${runsDiff} runs!`;
-                emoji = '🏆';
+                result = `${match.team1.name} won by ${runsDiff} runs!`;
             } else {
-                result = 'Match TIED!';
-                emoji = '🤝';
+                result = 'Match Tied!';
             }
             
-            const matchSummary = `${emoji} ${result}\n\nFinal Scores:\n${match.team1.name}: ${t1Runs}/${t1Wickets} (${match.team1.overs}.${match.team1.ballsInOver})\n${match.team2.name}: ${t2Runs}/${t2Wickets} (${match.team2.overs}.${match.team2.ballsInOver})\n\nClick 'NEW MATCH' to start again!`;
-            
-            showModal('MATCH OVER!', matchSummary, [
-                { text: 'OK', class: 'modal-btn-success' }
-            ]);
+            alert(`Match Over!\n${result}\n\n${match.team1.name}: ${t1Runs}/${match.team1.wickets}\n${match.team2.name}: ${t2Runs}/${match.team2.wickets}`);
         }
 
         function undoLast() {
-            if (match.history.length === 0) {
-                showAlert('No actions to undo!', 'Cannot Undo');
-                return;
-            }
-            
-            // If match was ended, reopen it
-            if (match.matchEnded) {
-                match.matchEnded = false;
-            }
+            if (match.history.length === 0) return;
             
             const last = match.history.pop();
             const team = getCurrentTeam();
@@ -801,42 +539,12 @@
             
             match.currentOverBalls.pop();
             updateDisplay();
-            
-            showAlert('Last action undone successfully!', 'Undo Complete');
         }
 
         function resetMatch() {
-            showConfirm(
-                'Start a new match? Current match will be lost.',
-                () => {
-                    // Reset all match data
-                    match = {
-                        team1: { name: '', runs: 0, wickets: 0, balls: 0, overs: 0, ballsInOver: 0, extras: 0 },
-                        team2: { name: '', runs: 0, wickets: 0, balls: 0, overs: 0, ballsInOver: 0, extras: 0 },
-                        totalOvers: 20,
-                        currentInnings: 1,
-                        currentOverBalls: [],
-                        history: [],
-                        matchEnded: false
-                    };
-                    
-                    // Reset input fields
-                    document.getElementById('team1Name').value = '';
-                    document.getElementById('team2Name').value = '';
-                    document.getElementById('totalOvers').value = '';
-                    
-                    // Hide match screen and show setup screen
-                    document.getElementById('matchScreen').classList.add('hidden');
-                    document.getElementById('setupScreen').classList.remove('hidden');
-                    
-                    // Reset displays
-                    document.getElementById('team2Display').classList.add('hidden');
-                    document.getElementById('targetDisplay').classList.add('hidden');
-                    document.getElementById('inningsInfo').textContent = '1st Innings';
-                    document.getElementById('currentOver').innerHTML = '';
-                },
-                'New Match'
-            );
+            if (confirm('Start a new match? Current match will be lost.')) {
+                location.reload();
+            }
         }
     </script>
 </body>
