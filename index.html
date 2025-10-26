@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Score Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .match-info {
+            background: rgba(255,255,255,0.2);
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .scoreboard {
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .team-display {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .team-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .score-display {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .over-display {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .target-display {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #856404;
+        }
+
+        .controls {
+            padding: 20px;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-run {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-run:hover {
+            background: #218838;
+        }
+
+        .btn-wicket {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-wicket:hover {
+            background: #c82333;
+        }
+
+        .btn-extra {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .btn-extra:hover {
+            background: #e0a800;
+        }
+
+        .btn-control {
+            background: #6c757d;
+            color: white;
+            grid-column: span 3;
+        }
+
+        .btn-control:hover {
+            background: #5a6268;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            grid-column: span 3;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+
+        .innings-info {
+            text-align: center;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .ball-history {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 15px;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+
+        .ball-history h3 {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #667eea;
+        }
+
+        .balls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .ball {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+            color: white;
+        }
+
+        .ball-0 { background: #6c757d; }
+        .ball-1, .ball-2, .ball-3 { background: #28a745; }
+        .ball-4 { background: #17a2b8; }
+        .ball-6 { background: #007bff; }
+        .ball-W { background: #dc3545; }
+        .ball-WD, .ball-NB { background: #ffc107; color: #333; }
+
+        .setup-screen {
+            padding: 30px;
+        }
+
+        .setup-screen input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .setup-screen input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .crr-rrr {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            color: #333;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Setup Screen -->
+        <div id="setupScreen" class="setup-screen">
+            <h2 style="text-align: center; color: #667eea; margin-bottom: 20px;">Match Setup</h2>
+            <input type="text" id="team1Name" placeholder="Enter Team 1 Name">
+            <input type="text" id="team2Name" placeholder="Enter Team 2 Name">
+            <input type="number" id="totalOvers" placeholder="Number of Overs" min="1">
+            <button class="btn btn-primary" onclick="startMatch()">Start Match</button>
+        </div>
+
+        <!-- Match Screen -->
+        <div id="matchScreen" class="hidden">
+            <div class="header">
+                <h1>🏏 Cricket Score Calculator</h1>
+                <div class="match-info">
+                    <div id="matchTitle"></div>
+                </div>
+            </div>
+
+            <div class="scoreboard">
+                <div class="innings-info" id="inningsInfo">1st Innings</div>
+                
+                <!-- Team 1 Display -->
+                <div class="team-display" id="team1Display">
+                    <div class="team-name" id="team1NameDisplay"></div>
+                    <div class="score-display" id="team1Score">0/0</div>
+                    <div class="over-display" id="team1Overs">Overs: 0.0</div>
+                    <div class="crr-rrr">
+                        <div class="stat">
+                            <div class="stat-label">CRR</div>
+                            <div class="stat-value" id="team1CRR">0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team 2 Display -->
+                <div class="team-display hidden" id="team2Display">
+                    <div class="team-name" id="team2NameDisplay"></div>
+                    <div class="score-display" id="team2Score">0/0</div>
+                    <div class="over-display" id="team2Overs">Overs: 0.0</div>
+                    <div class="target-display hidden" id="targetDisplay"></div>
+                    <div class="crr-rrr">
+                        <div class="stat">
+                            <div class="stat-label">CRR</div>
+                            <div class="stat-value" id="team2CRR">0.00</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">RRR</div>
+                            <div class="stat-value" id="team2RRR">0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ball-history">
+                    <h3>This Over:</h3>
+                    <div class="balls" id="currentOver"></div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="button-grid">
+                    <button class="btn btn-run" onclick="addRun(0)">0</button>
+                    <button class="btn btn-run" onclick="addRun(1)">1</button>
+                    <button class="btn btn-run" onclick="addRun(2)">2</button>
+                    <button class="btn btn-run" onclick="addRun(3)">3</button>
+                    <button class="btn btn-run" onclick="addRun(4)">4</button>
+                    <button class="btn btn-run" onclick="addRun(6)">6</button>
+                    <button class="btn btn-wicket" onclick="addWicket()">WICKET</button>
+                    <button class="btn btn-extra" onclick="addWide()">WIDE</button>
+                    <button class="btn btn-extra" onclick="addNoBall()">NO BALL</button>
+                    <button class="btn btn-control" onclick="undoLast()">↶ UNDO</button>
+                    <button class="btn btn-control" onclick="nextInnings()">NEXT INNINGS</button>
+                    <button class="btn btn-primary" onclick="resetMatch()">NEW MATCH</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let match = {
+            team1: { name: '', runs: 0, wickets: 0, balls: 0, overs: 0, ballsInOver: 0, extras: 0 },
+            team2: { name: '', runs: 0, wickets: 0, balls: 0, overs: 0, ballsInOver: 0, extras: 0 },
+            totalOvers: 20,
+            currentInnings: 1,
+            currentOverBalls: [],
+            history: [],
+            matchEnded: false
+        };
+
+        function startMatch() {
+            const t1 = document.getElementById('team1Name').value.trim();
+            const t2 = document.getElementById('team2Name').value.trim();
+            const overs = parseInt(document.getElementById('totalOvers').value);
+
+            // Validation
+            if (!t1 || !t2) {
+                alert('Please enter both team names!');
+                return;
+            }
+            
+            if (!overs || overs < 1) {
+                alert('Please enter a valid number of overs (minimum 1)!');
+                return;
+            }
+
+            match.team1.name = t1;
+            match.team2.name = t2;
+            match.totalOvers = overs;
+
+            document.getElementById('team1NameDisplay').textContent = t1;
+            document.getElementById('team2NameDisplay').textContent = t2;
+            document.getElementById('matchTitle').textContent = `${t1} vs ${t2} • ${overs} Overs`;
+
+            document.getElementById('setupScreen').classList.add('hidden');
+            document.getElementById('matchScreen').classList.remove('hidden');
+            
+            updateDisplay();
+        }
+
+        function getCurrentTeam() {
+            return match.currentInnings === 1 ? match.team1 : match.team2;
+        }
+
+        function addRun(runs) {
+            if (match.matchEnded) {
+                alert('Match has ended! Please start a new match.');
+                return;
+            }
+            
+            const team = getCurrentTeam();
+            const totalBalls = team.overs * 6 + team.ballsInOver;
+            const maxBalls = match.totalOvers * 6;
+            
+            // Check if innings should end before adding ball
+            if (totalBalls >= maxBalls) {
+                alert(`${match.totalOvers} overs completed! Cannot add more balls.`);
+                return;
+            }
+            
+            if (team.wickets >= 10) {
+                alert('All wickets are down! Cannot continue batting.');
+                return;
+            }
+            
+            team.runs += runs;
+            team.balls++;
+            team.ballsInOver++;
+            
+            match.currentOverBalls.push(runs.toString());
+            match.history.push({ type: 'run', value: runs });
+            
+            checkOver();
+            updateDisplay();
+            checkInningsEnd();
+        }
+
+        function addWicket() {
+            if (match.matchEnded) {
+                alert('Match has ended! Please start a new match.');
+                return;
+            }
+            
+            const team = getCurrentTeam();
+            const totalBalls = team.overs * 6 + team.ballsInOver;
+            const maxBalls = match.totalOvers * 6;
+            
+            // Check if innings should end before adding ball
+            if (totalBalls >= maxBalls) {
+                alert(`${match.totalOvers} overs completed! Cannot add more balls.`);
+                return;
+            }
+            
+            if (team.wickets >= 10) {
+                alert('All wickets are already down!');
+                return;
+            }
+            
+            team.wickets++;
+            team.balls++;
+            team.ballsInOver++;
+            
+            match.currentOverBalls.push('W');
+            match.history.push({ type: 'wicket' });
+            
+            checkOver();
+            updateDisplay();
+            checkInningsEnd();
+        }
+
+        function addWide() {
+            if (match.matchEnded) {
+                alert('Match has ended! Please start a new match.');
+                return;
+            }
+            
+            const team = getCurrentTeam();
+            team.runs++;
+            team.extras++;
+            
+            match.currentOverBalls.push('WD');
+            match.history.push({ type: 'wide' });
+            
+            updateDisplay();
+            
+            // Check if team 2 won with wide
+            if (match.currentInnings === 2 && team.runs > match.team1.runs) {
+                endMatch();
+            }
+        }
+
+        function addNoBall() {
+            if (match.matchEnded) {
+                alert('Match has ended! Please start a new match.');
+                return;
+            }
+            
+            const team = getCurrentTeam();
+            team.runs++;
+            team.extras++;
+            
+            match.currentOverBalls.push('NB');
+            match.history.push({ type: 'noball' });
+            
+            updateDisplay();
+            
+            // Check if team 2 won with no ball
+            if (match.currentInnings === 2 && team.runs > match.team1.runs) {
+                endMatch();
+            }
+        }
+
+        function checkOver() {
+            const team = getCurrentTeam();
+            if (team.ballsInOver === 6) {
+                team.overs++;
+                team.ballsInOver = 0;
+                match.currentOverBalls = [];
+            }
+        }
+
+        function updateDisplay() {
+            const team = getCurrentTeam();
+            const isTeam1 = match.currentInnings === 1;
+            
+            const scoreId = isTeam1 ? 'team1Score' : 'team2Score';
+            const oversId = isTeam1 ? 'team1Overs' : 'team2Overs';
+            const crrId = isTeam1 ? 'team1CRR' : 'team2CRR';
+            
+            document.getElementById(scoreId).textContent = `${team.runs}/${team.wickets}`;
+            document.getElementById(oversId).textContent = `Overs: ${team.overs}.${team.ballsInOver}`;
+            
+            const totalBalls = team.overs * 6 + team.ballsInOver;
+            const crr = totalBalls > 0 ? ((team.runs / totalBalls) * 6).toFixed(2) : '0.00';
+            document.getElementById(crrId).textContent = crr;
+            
+            if (!isTeam1) {
+                const target = match.team1.runs + 1;
+                const needed = target - team.runs;
+                const ballsLeft = (match.totalOvers * 6) - totalBalls;
+                const rrr = ballsLeft > 0 ? ((needed / ballsLeft) * 6).toFixed(2) : '0.00';
+                
+                document.getElementById('team2RRR').textContent = rrr;
+                document.getElementById('targetDisplay').textContent = 
+                    `Target: ${target} | Need: ${needed} runs from ${ballsLeft} balls`;
+            }
+            
+            const overDiv = document.getElementById('currentOver');
+            overDiv.innerHTML = '';
+            match.currentOverBalls.forEach(ball => {
+                const ballEl = document.createElement('div');
+                ballEl.className = `ball ball-${ball}`;
+                ballEl.textContent = ball;
+                overDiv.appendChild(ballEl);
+            });
+        }
+
+        function checkInningsEnd() {
+            const team = getCurrentTeam();
+            const totalBalls = team.overs * 6 + team.ballsInOver;
+            const maxBalls = match.totalOvers * 6;
+            
+            let inningsEnded = false;
+            
+            if (team.wickets >= 10) {
+                inningsEnded = true;
+                alert(`All Out! ${team.name} innings ended: ${team.runs}/${team.wickets}`);
+            } else if (totalBalls >= maxBalls) {
+                inningsEnded = true;
+                alert(`${match.totalOvers} overs completed! ${team.name} innings ended: ${team.runs}/${team.wickets}`);
+            }
+            
+            if (match.currentInnings === 2 && team.runs > match.team1.runs) {
+                endMatch();
+                return;
+            }
+            
+            if (inningsEnded) {
+                if (match.currentInnings === 1) {
+                    setTimeout(() => {
+                        if (confirm('First innings completed. Start second innings?')) {
+                            nextInnings();
+                        }
+                    }, 100);
+                } else {
+                    endMatch();
+                }
+            }
+        }
+
+        function nextInnings() {
+            if (match.currentInnings === 1) {
+                match.currentInnings = 2;
+                match.currentOverBalls = [];
+                document.getElementById('inningsInfo').textContent = '2nd Innings';
+                document.getElementById('team2Display').classList.remove('hidden');
+                document.getElementById('targetDisplay').classList.remove('hidden');
+                updateDisplay();
+            }
+        }
+
+        function endMatch() {
+            match.matchEnded = true;
+            
+            const t1Runs = match.team1.runs;
+            const t2Runs = match.team2.runs;
+            const t1Wickets = match.team1.wickets;
+            const t2Wickets = match.team2.wickets;
+            
+            let result;
+            
+            if (t2Runs > t1Runs) {
+                const wicketsLeft = 10 - t2Wickets;
+                result = `🏆 ${match.team2.name} WON by ${wicketsLeft} wickets! 🏆`;
+            } else if (t1Runs > t2Runs) {
+                const runsDiff = t1Runs - t2Runs;
+                result = `🏆 ${match.team1.name} WON by ${runsDiff} runs! 🏆`;
+            } else {
+                result = '🤝 Match TIED! 🤝';
+            }
+            
+            const matchSummary = `
+MATCH OVER!
+
+${result}
+
+Final Scores:
+${match.team1.name}: ${t1Runs}/${t1Wickets} (${match.team1.overs}.${match.team1.ballsInOver} overs)
+${match.team2.name}: ${t2Runs}/${t2Wickets} (${match.team2.overs}.${match.team2.ballsInOver} overs)
+
+Click 'NEW MATCH' to start a new game!
+            `;
+            
+            alert(matchSummary);
+        }
+
+        function undoLast() {
+            if (match.history.length === 0) return;
+            
+            const last = match.history.pop();
+            const team = getCurrentTeam();
+            
+            if (last.type === 'run') {
+                team.runs -= last.value;
+                team.balls--;
+                team.ballsInOver--;
+                if (team.ballsInOver < 0) {
+                    team.overs--;
+                    team.ballsInOver = 5;
+                }
+            } else if (last.type === 'wicket') {
+                team.wickets--;
+                team.balls--;
+                team.ballsInOver--;
+                if (team.ballsInOver < 0) {
+                    team.overs--;
+                    team.ballsInOver = 5;
+                }
+            } else if (last.type === 'wide' || last.type === 'noball') {
+                team.runs--;
+                team.extras--;
+            }
+            
+            match.currentOverBalls.pop();
+            updateDisplay();
+        }
+
+        function resetMatch() {
+            if (confirm('Start a new match? Current match will be lost.')) {
+                // Reset all match data
+                match = {
+                    team1: { name: '', runs: 0, wickets: 0, balls: 0, overs: 0, ballsInOver: 0, extras: 0 },
+                    team2: { name: '', runs: 0, wickets: 0, balls: 0, overs: 0, ballsInOver: 0, extras: 0 },
+                    totalOvers: 20,
+                    currentInnings: 1,
+                    currentOverBalls: [],
+                    history: [],
+                    matchEnded: false
+                };
+                
+                // Reset input fields
+                document.getElementById('team1Name').value = '';
+                document.getElementById('team2Name').value = '';
+                document.getElementById('totalOvers').value = '';
+                
+                // Hide match screen and show setup screen
+                document.getElementById('matchScreen').classList.add('hidden');
+                document.getElementById('setupScreen').classList.remove('hidden');
+                
+                // Reset displays
+                document.getElementById('team2Display').classList.add('hidden');
+                document.getElementById('targetDisplay').classList.add('hidden');
+                document.getElementById('inningsInfo').textContent = '1st Innings';
+                document.getElementById('currentOver').innerHTML = '';
+            }
+        }
+    </script>
+</body>
+</html>
