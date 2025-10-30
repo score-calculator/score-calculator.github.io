@@ -46,6 +46,39 @@
             margin-top: 10px;
         }
 
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            background: #f8f9fa;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: white;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
         .scoreboard {
             padding: 20px;
             background: #f8f9fa;
@@ -144,21 +177,68 @@
         .btn-control {
             background: #6c757d;
             color: white;
-            grid-column: span 3;
         }
 
         .btn-control:hover {
             background: #5a6268;
         }
 
-        .btn-primary {
-            background: #667eea;
+        .btn-confirm {
+            background: #28a745;
             color: white;
+            font-size: 16px;
+        }
+        
+        .btn-confirm.full-width {
             grid-column: span 3;
+            font-size: 20px;     
+            padding: 18px;       
+        }
+        
+        .btn-confirm:hover:not(:disabled) {
+            background: #218838;
+        }
+
+        .btn-confirm:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .btn.active {
+            border: 3px solid #fff;
+            box-shadow: 0 0 0 3px #667eea, 0 4px 6px rgba(0,0,0,0.1);
+            transform: scale(1.05);
+        }
+
+        .pending-ball {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 2px solid #ffc107;
+        }
+
+        .pending-ball h3 {
+            font-size: 14px;
+            color: #856404;
+            margin-bottom: 8px;
+        }
+
+        .pending-details {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
         }
 
         .btn-primary:hover {
             background: #5568d3;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            grid-column: span 3;
         }
 
         .innings-info {
@@ -170,13 +250,24 @@
             font-weight: bold;
             color: #495057;
         }
+        
+        .current-bowler-info {
+            text-align: center;
+            padding: 10px;
+            background: #e6f7ff;
+            border: 1px solid #b3e0ff;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #007bff;
+        }
 
         .ball-history {
             background: white;
             padding: 10px;
             border-radius: 10px;
             margin-top: 15px;
-            max-height: 100px;
+            max-height: 150px;
             overflow-y: auto;
         }
 
@@ -185,6 +276,40 @@
             margin-bottom: 5px;
             color: #667eea;
         }
+
+        .over-summary-compact {
+            background: #f8f9fa;
+            padding: 8px 10px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+
+        .over-summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+
+        .over-summary-number {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .over-summary-runs {
+            font-weight: bold;
+            color: #28a745;
+        }
+        
+        .over-summary-bowler {
+            font-weight: 500;
+            font-size: 12px;
+            color: #495057;
+            margin-top: 3px;
+        }
+
 
         .balls {
             display: flex;
@@ -293,6 +418,32 @@
                 opacity: 1;
             }
         }
+        
+        /* Modal for Input (e.g., bowler's name) */
+        .modal-input-box {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        .modal-input-box input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px 0;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        
+        .modal-input-box input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
 
         .modal-header {
             font-size: 22px;
@@ -352,6 +503,124 @@
         .modal-btn-success:hover {
             background: #218838;
         }
+
+        /* Over-by-Over Statistics */
+        .over-stats {
+            padding: 20px;
+            background: white;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .over-item {
+            background: #f8f9fa;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .over-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .over-number {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 16px;
+        }
+
+        .over-bowler {
+            font-weight: bold;
+            color: #495057;
+            font-size: 16px;
+        }
+
+        .over-runs {
+            font-weight: bold;
+            color: #28a745;
+            font-size: 18px;
+        }
+
+        .over-balls {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .over-summary {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Analytics Styles */
+        .analytics {
+            padding: 20px;
+            background: white;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .analytics-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .analytics-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .analytics-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .analytics-row:last-child {
+            border-bottom: none;
+        }
+
+        .analytics-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .analytics-value {
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .highlight-value {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .highlight-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
@@ -362,7 +631,8 @@
             <input type="text" id="team1Name" placeholder="Enter Team 1 Name">
             <input type="text" id="team2Name" placeholder="Enter Team 2 Name">
             <input type="number" id="totalOvers" placeholder="Number of Overs" min="1">
-            <button class="btn btn-primary" onclick="startMatch()">Start Match</button>
+            
+            <button class="btn btn-primary" id="startMatchBtn">Start Match</button>
         </div>
 
         <!-- Match Screen -->
@@ -374,82 +644,126 @@
                 </div>
             </div>
 
-            <div class="scoreboard">
-                <div class="innings-info" id="inningsInfo">1st Innings</div>
-                
-                <!-- Team 1 Display -->
-                <div class="team-display" id="team1Display">
-                    <div class="team-name" id="team1NameDisplay"></div>
-                    <div class="score-display" id="team1Score">0/0</div>
-                    <div class="over-display" id="team1Overs">Overs: 0.0</div>
-                    <div class="crr-rrr">
-                        <div class="stat">
-                            <div class="stat-label">CRR</div>
-                            <div class="stat-value" id="team1CRR">0.00</div>
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('score')">Score</button>
+                <button class="tab" onclick="switchTab('overs')">Overs</button>
+                <button class="tab" onclick="switchTab('analytics')">Analytics</button>
+            </div>
+
+            <!-- Score Tab -->
+            <div id="scoreTab" class="tab-content active">
+                <div class="scoreboard">
+                    <div class="innings-info" id="inningsInfo">1st Innings</div>
+                    <div class="current-bowler-info" id="currentBowlerInfo">Bowler: Unknown Bowler (Over 1)</div>
+                    
+                    <!-- Team 1 Display -->
+                    <div class="team-display" id="team1Display">
+                        <div class="team-name" id="team1NameDisplay"></div>
+                        <div class="score-display" id="team1Score">0/0</div>
+                        <div class="over-display" id="team1Overs">Overs: 0.0</div>
+                        <div class="crr-rrr">
+                            <div class="stat">
+                                <div class="stat-label">CRR</div>
+                                <div class="stat-value" id="team1CRR">0.00</div>
+                            </div>
                         </div>
+                    </div>
+
+                    <!-- Team 2 Display -->
+                    <div class="team-display hidden" id="team2Display">
+                        <div class="team-name" id="team2NameDisplay"></div>
+                        <div class="score-display" id="team2Score">0/0</div>
+                        <div class="over-display" id="team2Overs">Overs: 0.0</div>
+                        <div class="target-display hidden" id="targetDisplay"></div>
+                        <div class="crr-rrr">
+                            <div class="stat">
+                                <div class="stat-label">CRR</div>
+                                <div class="stat-value" id="team2CRR">0.00</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-label">RRR</div>
+                                <div class="stat-value" id="team2RRR">0.00</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ball-history">
+                        <h3>Overs History:</h3>
+                        <div id="allOversHistory"></div>
+                        <div id="currentOverSection"></div>
+                    </div>
+
+                    <div class="pending-ball hidden" id="pendingBall">
+                        <h3>⏳ Pending Ball:</h3>
+                        <div class="pending-details" id="pendingDetails"></div>
                     </div>
                 </div>
 
-                <!-- Team 2 Display -->
-                <div class="team-display hidden" id="team2Display">
-                    <div class="team-name" id="team2NameDisplay"></div>
-                    <div class="score-display" id="team2Score">0/0</div>
-                    <div class="over-display" id="team2Overs">Overs: 0.0</div>
-                    <div class="target-display hidden" id="targetDisplay"></div>
-                    <div class="crr-rrr">
-                        <div class="stat">
-                            <div class="stat-label">CRR</div>
-                            <div class="stat-value" id="team2CRR">0.00</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-label">RRR</div>
-                            <div class="stat-value" id="team2RRR">0.00</div>
-                        </div>
+                <div class="controls">
+                    <div class="button-grid">
+                        <button class="btn btn-run" onclick="selectRun(0)">0</button>
+                        <button class="btn btn-run" onclick="selectRun(1)">1</button>
+                        <button class="btn btn-run" onclick="selectRun(2)">2</button>
+                        <button class="btn btn-run" onclick="selectRun(3)">3</button>
+                        <button class="btn btn-run" onclick="selectRun(4)">4</button>
+                        <button class="btn btn-run" onclick="selectRun(6)">6</button>
+                        <button class="btn btn-wicket" onclick="selectWicket()">WICKET</button>
+                        <button class="btn btn-extra" onclick="toggleWide()">WIDE</button>
+                        <button class="btn btn-extra" onclick="toggleNoBall()">NO BALL</button>
+                        
+                        <button class="btn btn-control btn-confirm full-width" id="confirmBtn" onclick="confirmBall()" disabled>✓ CONFIRM</button>
+                        
+                        <button class="btn btn-control" onclick="undoLast()">↶ UNDO</button>
+                        <button class="btn btn-control" onclick="nextInnings()">NEXT INNINGS</button>
+                        <button class="btn btn-primary" onclick="resetMatch()">NEW MATCH</button>
                     </div>
-                </div>
-
-                <div class="ball-history">
-                    <h3>This Over:</h3>
-                    <div class="balls" id="currentOver"></div>
-                </div>
-
-                <div class="pending-ball hidden" id="pendingBall">
-                    <h3>⏳ Pending Ball:</h3>
-                    <div class="pending-details" id="pendingDetails"></div>
                 </div>
             </div>
 
-            <div class="controls">
-                <div class="button-grid">
-                    <button class="btn btn-run" onclick="selectRun(0)">0</button>
-                    <button class="btn btn-run" onclick="selectRun(1)">1</button>
-                    <button class="btn btn-run" onclick="selectRun(2)">2</button>
-                    <button class="btn btn-run" onclick="selectRun(3)">3</button>
-                    <button class="btn btn-run" onclick="selectRun(4)">4</button>
-                    <button class="btn btn-run" onclick="selectRun(6)">6</button>
-                    <button class="btn btn-wicket" onclick="selectWicket()">WICKET</button>
-                    <button class="btn btn-extra" onclick="toggleWide()">WIDE</button>
-                    <button class="btn btn-extra" onclick="toggleNoBall()">NO BALL</button>
-                    <button class="btn btn-control btn-confirm" id="confirmBtn" onclick="confirmBall()" disabled>✓ CONFIRM</button>
-                    <button class="btn btn-control" onclick="undoLast()">↶ UNDO</button>
-                    <button class="btn btn-control" onclick="nextInnings()">NEXT INNINGS</button>
-                    <button class="btn btn-primary" onclick="resetMatch()">NEW MATCH</button>
+            <!-- Overs Tab -->
+            <div id="oversTab" class="tab-content">
+                <div class="over-stats" id="overStats">
+                    <div style="text-align: center; padding: 40px; color: #999;">
+                        No overs completed yet
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div id="analyticsTab" class="tab-content">
+                <div class="analytics" id="analytics">
+                    <div style="text-align: center; padding: 40px; color: #999;">
+                        Analytics will appear once the match progresses
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Custom Modal -->
+    <!-- Custom Modals -->
     <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-box">
+        <!-- General Message Modal -->
+        <div class="modal-box hidden" id="messageModal">
             <div class="modal-header" id="modalHeader">Message</div>
             <div class="modal-body" id="modalBody"></div>
             <div class="modal-buttons" id="modalButtons"></div>
         </div>
+        
+        <!-- Input Modal (for bowler name) -->
+        <div class="modal-input-box hidden" id="inputModal">
+            <div class="modal-header">Enter Bowler's Name</div>
+            <div class="modal-body">Who is bowling over <span id="bowlerOverNumber"></span>? (Optional)</div>
+            <input type="text" id="bowlerNameInput" placeholder="Bowler Name">
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-secondary" id="bowlerCancelBtn">Cancel</button>
+                <button class="modal-btn modal-btn-primary" id="bowlerConfirmBtn">OK</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Custom Modal Functions
+        // --- Custom Modal Functions ---
         function showModal(header, message, buttons) {
             document.getElementById('modalHeader').textContent = header;
             document.getElementById('modalBody').textContent = message;
@@ -468,11 +782,48 @@
                 buttonContainer.appendChild(button);
             });
             
+            document.getElementById('messageModal').classList.remove('hidden');
+            document.getElementById('inputModal').classList.add('hidden');
             document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        function showInputModal(header, message, confirmAction) {
+            document.querySelector('#inputModal .modal-header').textContent = header;
+            document.getElementById('bowlerOverNumber').textContent = getCurrentTeam().overs + 1;
+            const inputField = document.getElementById('bowlerNameInput');
+            inputField.value = '';
+            
+            document.getElementById('bowlerConfirmBtn').onclick = () => {
+                const name = inputField.value.trim() || 'Unknown Bowler';
+                closeModal();
+                confirmAction(name);
+            };
+
+            document.getElementById('bowlerCancelBtn').onclick = () => {
+                closeModal();
+                // Treat cancel as 'Unknown Bowler' for simplicity, or handle specific cancellation logic
+                confirmAction('Unknown Bowler'); 
+            };
+            
+            // Allow pressing Enter key to submit
+            inputField.onkeypress = (e) => {
+                if (e.key === 'Enter') {
+                    document.getElementById('bowlerConfirmBtn').click();
+                }
+            };
+            
+            document.getElementById('messageModal').classList.add('hidden');
+            document.getElementById('inputModal').classList.remove('hidden');
+            document.getElementById('modalOverlay').classList.add('active');
+            
+            // Focus on input after a short delay
+            setTimeout(() => inputField.focus(), 100);
         }
 
         function closeModal() {
             document.getElementById('modalOverlay').classList.remove('active');
+            document.getElementById('messageModal').classList.add('hidden');
+            document.getElementById('inputModal').classList.add('hidden');
         }
 
         function showAlert(message, title = 'Notice') {
@@ -489,20 +840,45 @@
         }
 
         let match = {
-            team1: { name: '', runs: 0, wickets: 0, balls: 0, overs: 0, ballsInOver: 0, extras: 0 },
-            team2: { name: '', runs: 0, wickets: 0, balls: 0, overs: 0, ballsInOver: 0, extras: 0 },
+            team1: { name: '', runs: 0, wickets: 0, balls: 0, overs: 0, ballsInOver: 0, extras: 0, currentBowler: '' },
+            team2: { name: '', runs: 0, wickets: 0, balls: 0, overs: 0, ballsInOver: 0, extras: 0, currentBowler: '' },
             totalOvers: 20,
             currentInnings: 1,
             currentOverBalls: [],
-            history: [],
+            // history now stores the effect of each confirmed ball
+            history: [], 
             matchEnded: false,
             pendingBall: {
                 runs: null,
                 isWicket: false,
                 isWide: false,
                 isNoBall: false
+            },
+            overByOver: {
+                team1: [],
+                team2: []
             }
         };
+
+        function switchTab(tab) {
+            // Update tab buttons
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            const clickedButton = event.currentTarget || event.target;
+            clickedButton.classList.add('active');
+
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            if (tab === 'score') {
+                document.getElementById('scoreTab').classList.add('active');
+            } else if (tab === 'overs') {
+                document.getElementById('oversTab').classList.add('active');
+                updateOverStats();
+            } else if (tab === 'analytics') {
+                document.getElementById('analyticsTab').classList.add('active');
+                updateAnalytics();
+            }
+        }
 
         function startMatch() {
             const t1 = document.getElementById('team1Name').value.trim();
@@ -531,12 +907,53 @@
             document.getElementById('setupScreen').classList.add('hidden');
             document.getElementById('matchScreen').classList.remove('hidden');
             
+            // Start the first over for the current innings (Team 1)
+            startNewOver();
             updateDisplay();
         }
 
         function getCurrentTeam() {
             return match.currentInnings === 1 ? match.team1 : match.team2;
         }
+        
+        function getBowlingTeam() {
+            return match.currentInnings === 1 ? match.team2 : match.team1;
+        }
+
+        // --- New Bowler Prompt Function ---
+        function promptForBowler() {
+            const team = getCurrentTeam();
+            // Don't prompt if max overs reached or all out
+            if (team.overs >= match.totalOvers || team.wickets >= 10) {
+                return;
+            }
+            
+            const bowlingTeam = getBowlingTeam();
+            const nextOverNumber = team.overs + 1;
+            
+            showInputModal(
+                `${bowlingTeam.name} - New Bowler`, 
+                `Who is bowling over ${nextOverNumber}? (Optional)`,
+                (bowlerName) => {
+                    team.currentBowler = bowlerName;
+                    updateDisplay(); 
+                }
+            );
+        }
+
+        function startNewOver() {
+            const team = getCurrentTeam();
+            // Only prompt if a full over hasn't been completed already
+            if (team.ballsInOver === 0 && team.overs < match.totalOvers && team.wickets < 10) {
+                promptForBowler();
+            } else {
+                // If it's the first ball of the match, set a default
+                if (team.overs === 0 && team.ballsInOver === 0) {
+                    team.currentBowler = 'Unknown Bowler';
+                }
+            }
+        }
+
 
         function selectRun(runs) {
             if (match.matchEnded) {
@@ -625,6 +1042,23 @@
             const pendingDiv = document.getElementById('pendingBall');
             const detailsDiv = document.getElementById('pendingDetails');
             const confirmBtn = document.getElementById('confirmBtn');
+            const undoBtn = document.querySelector('button[onclick="undoLast()"]');
+
+            // Toggle active state for wide/noball buttons
+            document.querySelector('button[onclick="toggleWide()"]').classList.toggle('active', pending.isWide);
+            document.querySelector('button[onclick="toggleNoBall()"]').classList.toggle('active', pending.isNoBall);
+            
+            // Toggle active state for run buttons (visual feedback for selection)
+            document.querySelectorAll('.btn-run').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('button[onclick="selectWicket()"]').classList.remove('active');
+
+            if (pending.runs !== null) {
+                if (pending.isWicket) {
+                    document.querySelector('button[onclick="selectWicket()"]').classList.add('active');
+                } else {
+                    document.querySelector(`button[onclick="selectRun(${pending.runs})"]`).classList.add('active');
+                }
+            }
 
             if (pending.runs !== null || pending.isWicket || pending.isWide || pending.isNoBall) {
                 let details = [];
@@ -649,6 +1083,9 @@
                 pendingDiv.classList.add('hidden');
                 confirmBtn.disabled = true;
             }
+            
+            // Enable/Disable undo button based on history
+            undoBtn.disabled = match.history.length === 0;
         }
 
         function confirmBall() {
@@ -661,18 +1098,19 @@
             const team = getCurrentTeam();
             let totalRuns = 0;
             let isBall = true;
+            let extraRuns = 0;
 
-            // Calculate runs
+            // Calculate runs and extras
             if (pending.isWide) {
-                totalRuns += 1;
-                team.extras += 1;
+                totalRuns += 1; // 1 extra for wide
+                extraRuns += 1;
                 isBall = false;
                 if (pending.runs > 0) {
                     totalRuns += pending.runs;
                 }
             } else if (pending.isNoBall) {
-                totalRuns += 1;
-                team.extras += 1;
+                totalRuns += 1; // 1 extra for no-ball
+                extraRuns += 1;
                 isBall = false;
                 if (pending.runs > 0) {
                     totalRuns += pending.runs;
@@ -682,6 +1120,7 @@
             }
 
             team.runs += totalRuns;
+            team.extras += extraRuns;
 
             // Handle ball count and wicket
             if (isBall) {
@@ -693,7 +1132,7 @@
                 }
             }
 
-            // Create ball display
+            // Create ball display for history
             let ballDisplay = '';
             if (pending.isWicket) {
                 ballDisplay = 'W';
@@ -706,139 +1145,272 @@
             }
 
             match.currentOverBalls.push(ballDisplay);
+            
+            // Push detailed data to history for UNDO function
             match.history.push({
-                type: 'ball',
-                data: {
-                    runs: totalRuns,
-                    wicket: pending.isWicket,
-                    wide: pending.isWide,
-                    noBall: pending.isNoBall,
-                    ballCounted: isBall,
-                    ballsInOver: team.ballsInOver
-                }
+                innings: match.currentInnings,
+                runs: totalRuns,
+                wicket: pending.isWicket ? 1 : 0,
+                extra: extraRuns,
+                wide: pending.isWide,
+                noBall: pending.isNoBall,
+                ballCounted: isBall,
+                overCompleted: team.ballsInOver === 6,
+                ballsInOverBefore: team.ballsInOver - (isBall ? 1 : 0), // Balls in over *before* this ball
+                bowlerName: team.currentBowler // Save current bowler for reference
             });
 
-            // Reset pending ball
+            checkOver();
+            updateDisplay();
+            // Reset pending ball, but keep selection visually active for a brief moment if needed
             match.pendingBall = {
                 runs: null,
                 isWicket: false,
                 isWide: false,
                 isNoBall: false
             };
-
-            checkOver();
-            updateDisplay();
             updatePendingDisplay();
             checkInningsEnd();
-        }
-
-        function addRun(runs) {
-            // Legacy function - redirected to new system
-            selectRun(runs);
-            confirmBall();
-        }
-
-        function addWicket() {
-            // Legacy function - redirected to new system
-            selectWicket();
-            confirmBall();
-        }
-
-        function addWide() {
-            // Legacy function - redirected to new system
-            toggleWide();
-            confirmBall();
-        }
-
-        function addNoBall() {
-            // Legacy function - redirected to new system
-            toggleNoBall();
-            confirmBall();
         }
 
         function checkOver() {
             const team = getCurrentTeam();
             if (team.ballsInOver === 6) {
+                // Save over statistics
+                const overData = {
+                    overNumber: team.overs + 1,
+                    runs: calculateOverRuns(),
+                    wickets: calculateOverWickets(),
+                    balls: [...match.currentOverBalls],
+                    bowlerName: team.currentBowler // Include bowler name
+                };
+                
+                if (match.currentInnings === 1) {
+                    match.overByOver.team1.push(overData);
+                } else {
+                    match.overByOver.team2.push(overData);
+                }
+                
                 team.overs++;
                 team.ballsInOver = 0;
                 match.currentOverBalls = [];
+                
+                // Prompt for the next bowler immediately after an over is complete
+                startNewOver();
             }
         }
 
+        function calculateOverRuns() {
+            let runs = 0;
+            match.currentOverBalls.forEach(ball => {
+                if (ball === 'W') {
+                    runs += 0;
+                } else if (ball.includes('WD+') || ball.includes('NB+')) {
+                    // Extract runs from WD+X or NB+X
+                    const extraRuns = parseInt(ball.split('+')[1]);
+                    runs += 1 + extraRuns;
+                } else if (ball === 'WD' || ball === 'NB') {
+                    runs += 1;
+                } else {
+                    const runValue = parseInt(ball);
+                    if (!isNaN(runValue)) {
+                       runs += runValue;
+                    }
+                }
+            });
+            return runs;
+        }
+
+        function calculateOverWickets() {
+            return match.currentOverBalls.filter(ball => ball === 'W').length;
+        }
+
+        // --- CORE UNDO FUNCTION ---
+        function undoLast() {
+            if (match.history.length === 0) {
+                showAlert('Cannot undo: No balls have been recorded yet.', 'Undo Unavailable');
+                return;
+            }
+
+            // Pop the last history entry
+            const lastBall = match.history.pop();
+            const team = getCurrentTeam();
+
+            // 1. Check if the undone ball was from the *previous* innings 
+            if (lastBall.innings !== match.currentInnings) {
+                 showConfirm(
+                    `The last recorded ball was from the ${lastBall.innings === 1 ? '1st' : '2nd'} innings. Do you want to revert to that innings?`,
+                    () => {
+                        // Revert the innings change first
+                        match.currentInnings = lastBall.innings;
+                        // Then call undoLast again, which will now process the ball in the correct innings context
+                        undoLast();
+                    },
+                    'Revert Innings?'
+                );
+                return;
+            }
+
+            // 2. Revert main team stats
+            team.runs -= lastBall.runs;
+            team.wickets -= lastBall.wicket;
+            team.extras -= lastBall.extra;
+
+            // 3. Revert ball/over counts
+            if (lastBall.ballCounted) {
+                team.balls--; 
+            }
+            
+            // Check if this ball completed an over (i.e., it was the 6th ball of an over)
+            if (lastBall.overCompleted) {
+                // This means the over completed and a new bowler was potentially set.
+                team.overs--; 
+                team.ballsInOver = 5; 
+                
+                // Restore match.currentOverBalls from the over-by-over history
+                const currentOverHistory = match.currentInnings === 1 ? match.overByOver.team1 : match.overByOver.team2;
+                
+                if (currentOverHistory.length > 0) {
+                    const lastOver = currentOverHistory.pop();
+                    match.currentOverBalls = lastOver.balls.slice(0, 5); // Restore balls 1-5 (the 6th was just popped from history)
+                }
+
+                // Restore the bowler from the ball *before* the completed over (i.e., the bowler of the previous over)
+                // If the history is not empty, the previous ball will tell us the bowler of the over we just reverted *from*.
+                // The current over now in progress (team.overs + 1) should retain the bowler of the over just completed.
+                // Since the over was reverted, the last bowler assigned by promptForBowler() is irrelevant.
+                const previousOverData = currentOverHistory[currentOverHistory.length - 1];
+
+                if (previousOverData) {
+                    // This is the bowler who bowled the over *before* the one we just undid.
+                    team.currentBowler = previousOverData.bowlerName; 
+                } else {
+                    // Must be over 1 again
+                    team.currentBowler = 'Unknown Bowler';
+                }
+
+            } else {
+                // Ball was within the current over
+                if (lastBall.ballCounted) {
+                    team.ballsInOver--; // Decrement ball count in the current over
+                }
+                
+                // Remove the last entry from the current over balls array
+                match.currentOverBalls.pop(); 
+                
+                // Keep the current bowler, as the over is still in progress with the same bowler
+            }
+
+            // If we undid the very first ball of the match, reset bowler to default
+            if (team.overs === 0 && team.ballsInOver === 0 && match.history.length === 0) {
+                team.currentBowler = 'Unknown Bowler';
+            }
+
+
+            // 4. Update display and controls
+            updateDisplay();
+            updatePendingDisplay(); 
+            showAlert('Last ball successfully undone.', 'Undo Successful');
+        }
+        // --- END CORE UNDO FUNCTION ---
+
+
         function updateDisplay() {
             const team = getCurrentTeam();
-            const isTeam1 = match.currentInnings === 1;
-            
-            const scoreId = isTeam1 ? 'team1Score' : 'team2Score';
-            const oversId = isTeam1 ? 'team1Overs' : 'team2Overs';
-            const crrId = isTeam1 ? 'team1CRR' : 'team2CRR';
-            
-            document.getElementById(scoreId).textContent = `${team.runs}/${team.wickets}`;
-            document.getElementById(oversId).textContent = `Overs: ${team.overs}.${team.ballsInOver}`;
-            
             const totalBalls = team.overs * 6 + team.ballsInOver;
             const crr = totalBalls > 0 ? ((team.runs / totalBalls) * 6).toFixed(2) : '0.00';
-            document.getElementById(crrId).textContent = crr;
+            const ballsString = `${team.overs}.${team.ballsInOver}`;
+
+            const isTeam1 = match.currentInnings === 1;
+            const scoreElement = isTeam1 ? document.getElementById('team1Score') : document.getElementById('team2Score');
+            const oversElement = isTeam1 ? document.getElementById('team1Overs') : document.getElementById('team2Overs');
+            const crrElement = isTeam1 ? document.getElementById('team1CRR') : document.getElementById('team2CRR');
+            const teamDisplay = isTeam1 ? document.getElementById('team1Display') : document.getElementById('team2Display');
+            const otherTeamDisplay = isTeam1 ? document.getElementById('team2Display') : document.getElementById('team1Display');
             
-            if (!isTeam1) {
+            scoreElement.textContent = `${team.runs}/${team.wickets}`;
+            oversElement.textContent = `Overs: ${ballsString} (Max: ${match.totalOvers})`;
+            crrElement.textContent = crr;
+            
+            teamDisplay.classList.remove('hidden');
+            otherTeamDisplay.classList.add('hidden');
+
+            document.getElementById('inningsInfo').textContent = isTeam1 ? '1st Innings' : '2nd Innings';
+            
+            // Update Bowler Info
+            document.getElementById('currentBowlerInfo').textContent = 
+                `Bowler: ${team.currentBowler} (Over ${team.overs + 1})`;
+
+
+            // Target Display for 2nd Innings
+            const targetDisplay = document.getElementById('targetDisplay');
+            if (match.currentInnings === 2) {
                 const target = match.team1.runs + 1;
                 const needed = target - team.runs;
                 const ballsLeft = (match.totalOvers * 6) - totalBalls;
                 const rrr = ballsLeft > 0 ? ((needed / ballsLeft) * 6).toFixed(2) : '0.00';
                 
+                targetDisplay.textContent = `Target: ${target} • Need ${needed > 0 ? needed : 0} from ${ballsLeft > 0 ? ballsLeft : 0} balls • RRR: ${rrr}`;
+                targetDisplay.classList.remove('hidden');
                 document.getElementById('team2RRR').textContent = rrr;
-                document.getElementById('targetDisplay').textContent = 
-                    `Target: ${target} | Need: ${needed} runs from ${ballsLeft} balls`;
+            } else {
+                targetDisplay.classList.add('hidden');
             }
-            
-            const overDiv = document.getElementById('currentOver');
-            overDiv.innerHTML = '';
-            match.currentOverBalls.forEach(ball => {
-                const ballEl = document.createElement('div');
-                ballEl.className = `ball ball-${ball}`;
-                ballEl.textContent = ball;
-                overDiv.appendChild(ballEl);
-            });
+
+            // Current Over Display
+            const currentOverSection = document.getElementById('currentOverSection');
+            if (match.currentOverBalls.length > 0) {
+                let html = `
+                    <div class="over-summary-compact">
+                        <div class="over-summary-header">
+                            <span class="over-summary-number">Current Over: ${team.overs + 1}</span>
+                            <span class="over-summary-runs">${calculateOverRuns()} runs</span>
+                        </div>
+                        <div class="over-summary-bowler">
+                            ${team.currentBowler}
+                        </div>
+                        <div class="balls">
+                            ${match.currentOverBalls.map(ball => `<div class="ball ball-${ball.replace(/\+.*/, '')}">${ball}</div>`).join('')}
+                        </div>
+                    </div>
+                `;
+                currentOverSection.innerHTML = html;
+            } else {
+                currentOverSection.innerHTML = '';
+            }
+
+            // Update All Overs History (simple summary)
+            const allOversHistory = document.getElementById('allOversHistory');
+            const oversHistory = match.currentInnings === 1 ? match.overByOver.team1 : match.overByOver.team2;
+            allOversHistory.textContent = oversHistory.map(o => `(${o.runs}r, ${o.wickets}w, ${o.bowlerName})`).join(' • ');
+
+            // Check if match should end (only if not already ended)
+            if (match.matchEnded && (team.wickets < 10 && totalBalls < match.totalOvers * 6)) {
+                 match.matchEnded = false;
+            }
+
+            // Update control button state
+            document.getElementById('confirmBtn').disabled = (match.pendingBall.runs === null && !match.pendingBall.isWicket && !match.pendingBall.isWide && !match.pendingBall.isNoBall) || match.matchEnded;
+            document.querySelector('button[onclick="undoLast()"]').disabled = match.history.length === 0;
         }
 
         function checkInningsEnd() {
             const team = getCurrentTeam();
             const totalBalls = team.overs * 6 + team.ballsInOver;
-            const maxBalls = match.totalOvers * 6;
-            
-            let inningsEnded = false;
-            
-            if (team.wickets >= 10) {
-                inningsEnded = true;
-                showModal(
-                    'Innings Ended - All Out!',
-                    `${team.name} innings ended: ${team.runs}/${team.wickets}\n\n${team.name} is all out!`,
-                    [{ text: 'OK', class: 'modal-btn-primary' }]
-                );
-            } else if (totalBalls >= maxBalls) {
-                inningsEnded = true;
-                showModal(
-                    'Innings Ended - Overs Complete!',
-                    `${match.totalOvers} overs completed!\n\n${team.name} innings ended: ${team.runs}/${team.wickets}`,
-                    [{ text: 'OK', class: 'modal-btn-primary' }]
-                );
-            }
-            
-            if (match.currentInnings === 2 && team.runs > match.team1.runs) {
-                endMatch();
-                return;
-            }
-            
-            if (inningsEnded) {
+
+            if (team.wickets >= 10 || team.overs >= match.totalOvers) {
                 if (match.currentInnings === 1) {
-                    setTimeout(() => {
-                        showConfirm(
-                            'First innings completed. Start second innings?',
-                            () => nextInnings(),
-                            'Start 2nd Innings'
-                        );
-                    }, 500);
+                    showConfirm(
+                        `${team.name} innings ended with ${team.runs}/${team.wickets} in ${team.overs}.${team.ballsInOver} overs. Start 2nd Innings?`, 
+                        nextInnings, 
+                        'Innings Ended'
+                    );
                 } else {
+                    endMatch();
+                }
+            } else if (match.currentInnings === 2) {
+                const target = match.team1.runs + 1;
+                if (team.runs >= target) {
                     endMatch();
                 }
             }
@@ -848,127 +1420,256 @@
             if (match.currentInnings === 1) {
                 match.currentInnings = 2;
                 match.currentOverBalls = [];
-                document.getElementById('inningsInfo').textContent = '2nd Innings';
-                document.getElementById('team2Display').classList.remove('hidden');
-                document.getElementById('targetDisplay').classList.remove('hidden');
+                // Reset pending ball state when switching innings
+                match.pendingBall = { runs: null, isWicket: false, isWide: false, isNoBall: false };
+                match.team1.currentBowler = ''; // Clear bowler from team 1
+                match.team2.currentBowler = 'Unknown Bowler'; // Set default for team 2
+                startNewOver(); // Prompt for the first bowler of the 2nd innings
                 updateDisplay();
+            } else {
+                endMatch();
             }
         }
 
         function endMatch() {
             match.matchEnded = true;
-            
-            const t1Runs = match.team1.runs;
-            const t2Runs = match.team2.runs;
-            const t1Wickets = match.team1.wickets;
-            const t2Wickets = match.team2.wickets;
-            
-            let result;
-            let emoji;
-            
-            if (t2Runs > t1Runs) {
-                const wicketsLeft = 10 - t2Wickets;
-                result = `${match.team2.name} WON by ${wicketsLeft} wickets!`;
-                emoji = '🏆';
-            } else if (t1Runs > t2Runs) {
-                const runsDiff = t1Runs - t2Runs;
-                result = `${match.team1.name} WON by ${runsDiff} runs!`;
-                emoji = '🏆';
-            } else {
-                result = 'Match TIED!';
-                emoji = '🤝';
-            }
-            
-            const matchSummary = `${emoji} ${result}\n\nFinal Scores:\n${match.team1.name}: ${t1Runs}/${t1Wickets} (${match.team1.overs}.${match.team1.ballsInOver})\n${match.team2.name}: ${t2Runs}/${t2Wickets} (${match.team2.overs}.${match.team2.ballsInOver})\n\nClick 'NEW MATCH' to start again!`;
-            
-            showModal('MATCH OVER!', matchSummary, [
-                { text: 'OK', class: 'modal-btn-success' }
-            ]);
-        }
+            let resultMessage = '';
+            const t1 = match.team1;
+            const t2 = match.team2;
 
-        function undoLast() {
-            if (match.history.length === 0) {
-                showAlert('No actions to undo!', 'Cannot Undo');
-                return;
+            if (t1.runs === t2.runs) {
+                resultMessage = 'Match Tied!';
+            } else if (t1.runs > t2.runs) {
+                const margin = t1.runs - t2.runs;
+                resultMessage = `${t1.name} wins by ${margin} run${margin !== 1 ? 's' : ''}!`;
+            } else {
+                const wicketsLeft = 10 - t2.wickets;
+                const ballsRemaining = (match.totalOvers * 6) - (t2.overs * 6 + t2.ballsInOver);
+                resultMessage = `${t2.name} wins by ${wicketsLeft} wicket${wicketsLeft !== 1 ? 's' : ''} with ${ballsRemaining} ball${ballsRemaining !== 1 ? 's' : ''} remaining!`;
             }
-            
-            // If match was ended, reopen it
-            if (match.matchEnded) {
-                match.matchEnded = false;
-            }
-            
-            const last = match.history.pop();
-            const team = getCurrentTeam();
-            
-            if (last.type === 'ball') {
-                const data = last.data;
-                
-                // Reverse runs
-                team.runs -= data.runs;
-                
-                // Reverse wicket
-                if (data.wicket) {
-                    team.wickets--;
-                }
-                
-                // Reverse ball count
-                if (data.ballCounted) {
-                    team.balls--;
-                    team.ballsInOver--;
-                    if (team.ballsInOver < 0) {
-                        team.overs--;
-                        team.ballsInOver = 5;
-                    }
-                }
-                
-                // Reverse extras
-                if (data.wide || data.noBall) {
-                    team.extras--;
-                    if (data.runs > 1) {
-                        team.extras -= (data.runs - 1);
-                    }
-                }
-            }
-            
-            match.currentOverBalls.pop();
+
+            showAlert(resultMessage, 'Match Result');
             updateDisplay();
-            
-            showAlert('Last action undone successfully!', 'Undo Complete');
         }
 
         function resetMatch() {
-            showConfirm(
-                'Start a new match? Current match will be lost.',
-                () => {
-                    // Reset all match data
-                    match = {
-                        team1: { name: '', runs: 0, wickets: 0, balls: 0, overs: 0, ballsInOver: 0, extras: 0 },
-                        team2: { name: '', runs: 0, wickets: 0, balls: 0, overs: 0, ballsInOver: 0, extras: 0 },
-                        totalOvers: 20,
-                        currentInnings: 1,
-                        currentOverBalls: [],
-                        history: [],
-                        matchEnded: false
-                    };
-                    
-                    // Reset input fields
-                    document.getElementById('team1Name').value = '';
-                    document.getElementById('team2Name').value = '';
-                    document.getElementById('totalOvers').value = '';
-                    
-                    // Hide match screen and show setup screen
-                    document.getElementById('matchScreen').classList.add('hidden');
-                    document.getElementById('setupScreen').classList.remove('hidden');
-                    
-                    // Reset displays
-                    document.getElementById('team2Display').classList.add('hidden');
-                    document.getElementById('targetDisplay').classList.add('hidden');
-                    document.getElementById('inningsInfo').textContent = '1st Innings';
-                    document.getElementById('currentOver').innerHTML = '';
-                },
-                'New Match'
-            );
+            showConfirm('Are you sure you want to start a new match? All current score data will be lost.', () => {
+                match = {
+                    team1: { name: '', runs: 0, wickets: 0, balls: 0, overs: 0, ballsInOver: 0, extras: 0, currentBowler: '' },
+                    team2: { name: '', runs: 0, wickets: 0, balls: 0, overs: 0, ballsInOver: 0, extras: 0, currentBowler: '' },
+                    totalOvers: 20,
+                    currentInnings: 1,
+                    currentOverBalls: [],
+                    history: [],
+                    matchEnded: false,
+                    pendingBall: {
+                        runs: null,
+                        isWicket: false,
+                        isWide: false,
+                        isNoBall: false
+                    },
+                    overByOver: {
+                        team1: [],
+                        team2: []
+                    }
+                };
+
+                document.getElementById('setupScreen').classList.remove('hidden');
+                document.getElementById('matchScreen').classList.add('hidden');
+                document.getElementById('team1Name').value = '';
+                document.getElementById('team2Name').value = '';
+                document.getElementById('totalOvers').value = '';
+                // Reset to Score tab
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelector('.tab').classList.add('active');
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                document.getElementById('scoreTab').classList.add('active');
+                
+                updatePendingDisplay(); // Re-enable undo button check
+                updateDisplay();
+            }, 'New Match Confirmation');
         }
+
+        function updateOverStats() {
+            const overStatsDiv = document.getElementById('overStats');
+            const currentTeam = match.currentInnings === 1 ? 'team1' : 'team2';
+            const overs = match.overByOver[currentTeam];
+            
+            if (overs.length === 0) {
+                overStatsDiv.innerHTML = '<div style="text-align: center; padding: 40px; color: #999;">No overs completed yet</div>';
+                return;
+            }
+
+            let html = '';
+            overs.forEach(over => {
+                html += `
+                    <div class="over-item">
+                        <div class="over-header">
+                            <span class="over-number">Over ${over.overNumber}</span>
+                            <span class="over-bowler">by ${over.bowlerName}</span>
+                            <span class="over-runs">${over.runs} run${over.runs !== 1 ? 's' : ''}</span>
+                        </div>
+                        <div class="over-summary">
+                            ${over.wickets > 0 ? `${over.wickets} wicket${over.wickets !== 1 ? 's' : ''} • ` : ''}
+                            ${over.balls.length} ball${over.balls.length !== 1 ? 's' : ''}
+                        </div>
+                        <div class="over-balls">
+                            ${over.balls.map(ball => `<div class="ball ball-${ball.replace(/\+.*/, '')}">${ball}</div>`).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            overStatsDiv.innerHTML = html;
+        }
+
+        function updateAnalytics() {
+            const analyticsDiv = document.getElementById('analytics');
+            const team = getCurrentTeam();
+            const innings = match.currentInnings;
+            
+            if (team.balls === 0 && team.runs === 0) {
+                analyticsDiv.innerHTML = '<div style="text-align: center; padding: 40px; color: #999;">Analytics will appear once the match progresses</div>';
+                return;
+            }
+
+            const totalBalls = team.overs * 6 + team.ballsInOver;
+            const crr = totalBalls > 0 ? ((team.runs / totalBalls) * 6).toFixed(2) : '0.00';
+            const strikeRate = totalBalls > 0 ? ((team.runs / totalBalls) * 100).toFixed(2) : '0.00';
+            
+            // Calculate boundaries
+            let fours = 0, sixes = 0, dots = 0;
+            const currentOvers = innings === 1 ? match.overByOver.team1 : match.overByOver.team2;
+            currentOvers.forEach(over => {
+                over.balls.forEach(ball => {
+                    if (ball === '4') fours++;
+                    if (ball === '6') sixes++;
+                    if (ball === '0') dots++;
+                });
+            });
+            // Add current over balls
+            match.currentOverBalls.forEach(ball => {
+                if (ball === '4') fours++;
+                if (ball === '6') sixes++;
+                if (ball === '0') dots++;
+            });
+
+            const boundaryRuns = (fours * 4) + (sixes * 6);
+            const boundaryPercent = team.runs > 0 ? ((boundaryRuns / team.runs) * 100).toFixed(1) : '0.0';
+            const dotBallPercent = totalBalls > 0 ? ((dots / totalBalls) * 100).toFixed(1) : '0.0';
+
+            // Find highest scoring over
+            let highestOver = { overNumber: 0, runs: 0, bowlerName: 'N/A' };
+            currentOvers.forEach(over => {
+                if (over.runs > highestOver.runs) {
+                    highestOver = over;
+                }
+            });
+
+            let html = `
+                <div class="highlight-box">
+                    <div class="highlight-label">Current Run Rate</div>
+                    <div class="highlight-value">${crr}</div>
+                </div>
+
+                <div class="analytics-section">
+                    <div class="analytics-title">📊 Scoring Statistics</div>
+                    <div class="analytics-row">
+                        <span class="analytics-label">Total Runs</span>
+                        <span class="analytics-value">${team.runs}</span>
+                    </div>
+                    <div class="analytics-row">
+                        <span class="analytics-label">Wickets Lost</span>
+                        <span class="analytics-value">${team.wickets}/10</span>
+                    </div>
+                    <div class="analytics-row">
+                        <span class="analytics-label">Balls Faced</span>
+                        <span class="analytics-value">${totalBalls}</span>
+                    </div>
+                    <div class="analytics-row">
+                        <span class="analytics-label">Strike Rate</span>
+                        <span class="analytics-value">${strikeRate}</span>
+                    </div>
+                </div>
+
+                <div class="analytics-section">
+                    <div class="analytics-title">🎯 Boundary Analysis</div>
+                    <div class="analytics-row">
+                        <span class="analytics-label">Fours</span>
+                        <span class="analytics-value">${fours} (${fours * 4} runs)</span>
+                    </div>
+                    <div class="analytics-row">
+                        <span class="analytics-label">Sixes</span>
+                        <span class="analytics-value">${sixes} (${sixes * 6} runs)</span>
+                    </div>
+                    <div class="analytics-row">
+                        <span class="analytics-label">Boundary %</span>
+                        <span class="analytics-value">${boundaryPercent}%</span>
+                    </div>
+                    <div class="analytics-row">
+                        <span class="analytics-label">Dot Balls</span>
+                        <span class="analytics-value">${dots} (${dotBallPercent}%)</span>
+                    </div>
+                </div>
+
+                <div class="analytics-section">
+                    <div class="analytics-title">⚡ Over Analysis</div>
+                    <div class="analytics-row">
+                        <span class="analytics-label">Overs Bowled</span>
+                        <span class="analytics-value">${team.overs}.${team.ballsInOver}</span>
+                    </div>
+                    <div class="analytics-row">
+                        <span class="analytics-label">Highest Scoring Over</span>
+                        <span class="analytics-value">${highestOver.runs > 0 ? `Over ${highestOver.overNumber} (${highestOver.runs}r, by ${highestOver.bowlerName})` : 'N/A'}</span>
+                    </div>
+                    <div class="analytics-row">
+                        <span class="analytics-label">Extras</span>
+                        <span class="analytics-value">${team.extras}</span>
+                    </div>
+                </div>
+            `;
+
+            if (innings === 2) {
+                const target = match.team1.runs + 1;
+                const needed = target - team.runs;
+                const ballsLeft = (match.totalOvers * 6) - totalBalls;
+                const rrr = ballsLeft > 0 ? ((needed / ballsLeft) * 6).toFixed(2) : '0.00';
+                
+                html += `
+                    <div class="analytics-section">
+                        <div class="analytics-title">🎯 Chase Progress</div>
+                        <div class="analytics-row">
+                            <span class="analytics-label">Target</span>
+                            <span class="analytics-value">${target}</span>
+                        </div>
+                        <div class="analytics-row">
+                            <span class="analytics-label">Runs Needed</span>
+                            <span class="analytics-value">${needed > 0 ? needed : 0}</span>
+                        </div>
+                        <div class="analytics-row">
+                            <span class="analytics-label">Balls Remaining</span>
+                            <span class="analytics-value">${ballsLeft > 0 ? ballsLeft : 0}</span>
+                        </div>
+                        <div class="analytics-row">
+                            <span class="analytics-label">Required Run Rate</span>
+                            <span class="analytics-value">${rrr}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            analyticsDiv.innerHTML = html;
+        }
+
+        // Add event listener for the start button
+        document.addEventListener('DOMContentLoaded', () => {
+            const startButton = document.getElementById('startMatchBtn');
+            if (startButton) {
+                startButton.addEventListener('click', startMatch);
+            }
+            updatePendingDisplay(); // Initial state update for undo button
+        });
+        
     </script>
 </body>
 </html>
